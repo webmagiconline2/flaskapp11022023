@@ -7,7 +7,21 @@ counter = 0
 def hello():
     global counter
     counter += 1
-    return "Hello, World! This page has been visited {} times.".format(counter)
+    return '''
+    <html>
+    <head>
+        <style>
+            body {{
+                background-color: lightblue;
+            }}
+        </style>
+    </head>
+    <body>
+        <h1>Hello, World!</h1>
+        <p>This page has been visited {} times.</p>
+    </body>
+    </html>
+    '''.format(counter)
 
 if __name__ == "__main__":
     app.run(debug=True)
