@@ -1,27 +1,22 @@
-from flask import Flask
+from flask import Flask, jsonify, render_template
 
 app = Flask(__name__)
-counter = 0
+app.visits = 0
+app.bg_color = "white"
 
 @app.route("/")
 def hello():
-    global counter
-    counter += 1
-    return '''
-    <html>
-    <head>
-        <style>
-            body {{
-                background-color: lightblue;
-            }}
-        </style>
-    </head>
-    <body>
-        <h1>Hello, World!</h1>
-        <p>This page has been visited {} times.</p>
-    </body>
-    </html>
-    '''.format(counter)
+    app.visits += 1
+    return render_template("index.html", message="Hello World", visits=app.visits, bg_color=app.bg_color)
+
+@app.route("/api/data")
+def data():
+    data = {
+        "message": "Hello World",
+        "visits": app.visits,
+        "background_color": app.bg_color
+    }
+    return jsonify(data)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
